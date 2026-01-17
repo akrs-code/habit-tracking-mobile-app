@@ -65,7 +65,7 @@ export default function AuthScreen() {
           onChangeText={setPassword}
         />
 
-        {error && <Text style={{ color: theme.colors.error, paddingBottom: 10 }}>{error}</Text>}
+        {error && <Text style={{ color: theme.colors.error, textAlign:"center", paddingTop: 10 }}>{error}</Text>}
 
         <Button mode="contained" onPress={handleAuth}>
           {isSignup ? "Sign Up" : "Sign In"}
