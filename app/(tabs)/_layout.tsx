@@ -5,12 +5,12 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: "#f5f5f5" },
+        headerStyle: { backgroundColor: "#f1f4f9" },
         headerShadowVisible: false,
         headerTitleAlign: "center",
         headerTitleStyle: { fontWeight: "bold", fontSize: 18 },
         tabBarStyle: {
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#f1f4f9",
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
@@ -23,7 +23,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Today's Habits",
+          title: "Your Habits",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="calendar-today"
