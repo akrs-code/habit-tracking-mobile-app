@@ -1,20 +1,27 @@
-import { DATABASE_ID, databases, HABITS_COLLECTION_ID } from '@/lib/appwrite';
-import { useAuth } from '@/lib/auth-context';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ID } from 'react-native-appwrite';
-import { Button, SegmentedButtons, Text, TextInput, useTheme } from 'react-native-paper';
+import { DATABASE_ID, databases, HABITS_COLLECTION_ID } from "@/lib/appwrite";
+import { useAuth } from "@/lib/auth-context";
+import { Label } from "@react-navigation/elements";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { ID } from "react-native-appwrite";
+import {
+  Button,
+  SegmentedButtons,
+  Text,
+  TextInput,
+  useTheme
+} from "react-native-paper";
 
-const FREQUENCIES = ["daily", "weekly", "monthly"]
-
+const FREQUENCIES = ["daily", "weekly", "monthly"] as const;
 type Frequency = (typeof FREQUENCIES)[number];
 
 export default function AddHabitScreen() {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [frequency, setFrequency] = useState<Frequency>("daily");
   const [error, setError] = useState<string | null>(null);
+
   const { user } = useAuth();
   const theme = useTheme();
   const router = useRouter();
@@ -39,57 +46,117 @@ export default function AddHabitScreen() {
       );
 
       router.back();
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-        return;
-      }
-      setError("There was an error creating the habit")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create habit");
     }
   };
 
-
   return (
-    <View style={styles.container}>
-      <TextInput label="Title" mode='outlined' onChangeText={setTitle} style={styles.input} />
-      <TextInput label="Description" mode='outlined' onChangeText={setDescription} style={styles.input} />
-      <View style={styles.frequencyContainer}>
+    <View
+      style={
+        styles.container
+      }
+    >
+      <Text variant="headlineSmall" style={styles.title}>
+        Create a habit
+      </Text>
+
+      <Text style={styles.subtitle}>
+        Small actions, repeated consistently.
+      </Text>
+
+      <View style={styles.card}>
+        <Label style={styles.label}>Email Address</Label>
+        <TextInput
+          placeholder="Enter your habit name"
+          mode="outlined"
+          value={title}
+          onChangeText={setTitle}
+          style={styles.input}
+        />
+        <Label style={styles.label}>Email Address</Label>
+        <TextInput
+          placeholder="Why this habit matters"
+          mode="outlined"
+          value={description}
+          onChangeText={setDescription}
+          style={styles.input}
+        />
+
+        <Text style={styles.sectionLabel}>Frequency</Text>
+
         <SegmentedButtons
           value={frequency}
           onValueChange={(value) => setFrequency(value as Frequency)}
           buttons={FREQUENCIES.map((freq) => ({
             value: freq,
-            label: freq.charAt(0).toUpperCase() + freq.slice(1),
+            label: freq[0].toUpperCase() + freq.slice(1),
           }))}
-
         />
+
+        {error && (
+          <Text style={[styles.error, { color: theme.colors.error }]}>
+            {error}
+          </Text>
+        )}
+
+        <Button
+          mode="contained"
+          onPress={handleSubmit}
+          disabled={!title || !description}
+          style={styles.button}
+          contentStyle={styles.buttonContent}
+        >
+          Create habit
+        </Button>
       </View>
-      <Button mode="contained" onPress={handleSubmit} disabled={!title || !description} style={styles.button}>Add Habit</Button>
-
-       {error && <Text style={{ color: theme.colors.error, paddingBottom: 10 }}>{error}</Text>}
     </View>
-
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
+    paddingHorizontal: 20,
     justifyContent: "center",
-
+    backgroundColor: "#f1f4f9",
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: 6,
+    fontWeight: "bold",
+  },
+  label: {
+    textAlign: "left",
+    marginBottom: 8,
+  },
+  subtitle: {
+    textAlign: "center",
+    opacity: 0.7,
+    marginBottom: 20,
+  },
+  card: {
+    padding: 24,
+    borderRadius: 16,
   },
   input: {
-    margin: 16,
-
-  },
-  frequencyContainer: {
     marginBottom: 16,
-    padding: 16,
+  },
+  sectionLabel: {
+    marginBottom: 8,
+    fontWeight: "500",
+    opacity: 0.8,
+  },
+  error: {
+    textAlign: "center",
+    marginTop: 12,
   },
   button: {
-    marginHorizontal: 16,
-  }
-
-})
+    marginTop: 8,
+    borderRadius: 10,
+  },
+  buttonContent: {
+    height: 48,
+    marginTop: 8,
+  },
+});
