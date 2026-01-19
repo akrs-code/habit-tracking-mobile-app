@@ -22,7 +22,6 @@ function RouteGuard({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-// RootLayout Component
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
