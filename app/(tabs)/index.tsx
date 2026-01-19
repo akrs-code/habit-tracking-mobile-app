@@ -125,7 +125,7 @@ export default function Index() {
   const renderRightActions = (habitId: string) => (
     <View style={style.swipeActionRight}>
       {isHabitCompleted(habitId) ? (
-        <Text style={{color:"#fff"}}>Completed!</Text>
+        <Text style={{ color: "#fff" }}>Completed!</Text>
       ) : (
         <MaterialCommunityIcons
           name="check-circle-outline"
@@ -147,12 +147,12 @@ export default function Index() {
     <View style={style.container}>
       {/* Header */}
       <View style={style.header}>
-        <Text variant="headlineSmall" style={style.title}>Today's Habit</Text>
+        <Text variant="headlineSmall" style={style.title}>Your Habits</Text>
         <Button mode="text" onPress={signOut} icon="logout" style={style.button}>
           Sign Out
         </Button>
       </View>
-      
+
       <ScrollView showsVerticalScrollIndicator={false}>
         {habits?.length === 0 ? (
           <View style={style.emptyState}>
@@ -210,48 +210,55 @@ export default function Index() {
   );
 }
 
-// Styles
 const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#f5f5f5"
+    backgroundColor: "#f1f4f9",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 16,
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: "700",
+    fontSize: 22,
+  },
+  subtitle: {
+    color: "#666",
+    fontSize: 14,
+    marginBottom: 16,
   },
   card: {
     marginBottom: 18,
-    borderRadius: 18,
-    backgroundColor: "#f1f4f9",
+    borderRadius: 20,
+    backgroundColor: "#ffffff",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06,
     shadowRadius: 8,
-    elevation: 4,
+    elevation: 3,
   },
+
   cardCompleted: {
-    opacity: 0.6,
+    backgroundColor: "#f1f4f9", // soft green for completed
+    opacity: 1,
   },
   cardContent: {
     padding: 20,
   },
   cardTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 4,
-    color: "#22223b"
+    fontWeight: "700",
+    marginBottom: 6,
+    color: "#22223b",
   },
   cardDescription: {
     fontSize: 15,
     marginBottom: 16,
-    color: "#c2c2f1"
+    color: "#555",
   },
   cardFooter: {
     flexDirection: "row",
@@ -261,35 +268,49 @@ const style = StyleSheet.create({
   streakBadge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff3e0",
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    backgroundColor: "#fff4e6",
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
   streakText: {
     marginLeft: 6,
     color: "#ff9800",
-    fontWeight: "bold",
+    fontWeight: "700",
     fontSize: 14,
   },
   frequencyBadge: {
     backgroundColor: "#ede7f6",
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
   },
   frequencyText: {
     color: "#7c4dff",
-    fontWeight: "bold",
+    fontWeight: "700",
     fontSize: 14,
   },
   emptyState: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 60,
   },
   emptyStateText: {
-    color: "#666666"
+    color: "#888",
+    fontSize: 15,
+    textAlign: "center",
+    marginBottom: 12,
+  },
+  emptyStateButton: {
+    backgroundColor: "#7c4dff",
+    borderRadius: 12,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+  },
+  emptyStateButtonText: {
+    color: "#fff",
+    fontWeight: "700",
   },
   button: {
     borderRadius: 8,
@@ -314,5 +335,4 @@ const style = StyleSheet.create({
     marginTop: 2,
     paddingRight: 16,
   },
-
 });
